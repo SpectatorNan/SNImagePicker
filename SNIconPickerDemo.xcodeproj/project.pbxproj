@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7497EE3A1D7423D3000EC57E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE391D7423D3000EC57E /* main.m */; };
+		7497EE3D1D7423D3000EC57E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3C1D7423D3000EC57E /* AppDelegate.m */; };
+		7497EE401D7423D3000EC57E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3F1D7423D3000EC57E /* ViewController.m */; };
+		7497EE431D7423D3000EC57E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7497EE411D7423D3000EC57E /* Main.storyboard */; };
+		7497EE451D7423D3000EC57E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7497EE441D7423D3000EC57E /* Assets.xcassets */; };
+		7497EE481D7423D3000EC57E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7497EE461D7423D3000EC57E /* LaunchScreen.storyboard */; };
+		7497EE531D7423D3000EC57E /* SNIconPickerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE521D7423D3000EC57E /* SNIconPickerDemoTests.m */; };
+		7497EE5E1D7423D3000EC57E /* SNIconPickerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE5D1D7423D3000EC57E /* SNIconPickerDemoUITests.m */; };
+		7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE6D1D742408000EC57E /* SNIconPicker.m */; };
+		7497EE711D7455E5000EC57E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7497EE701D7455E5000EC57E /* MobileCoreServices.framework */; };
+		7497EE741D745945000EC57E /* SNToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE731D745945000EC57E /* SNToastView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7497EE4F1D7423D3000EC57E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7497EE2D1D7423D3000EC57E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7497EE341D7423D3000EC57E;
+			remoteInfo = SNIconPickerDemo;
+		};
+		7497EE5A1D7423D3000EC57E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7497EE2D1D7423D3000EC57E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7497EE341D7423D3000EC57E;
+			remoteInfo = SNIconPickerDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7497EE351D7423D3000EC57E /* SNIconPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNIconPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7497EE391D7423D3000EC57E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7497EE3B1D7423D3000EC57E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7497EE3C1D7423D3000EC57E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7497EE3E1D7423D3000EC57E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7497EE3F1D7423D3000EC57E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7497EE421D7423D3000EC57E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7497EE441D7423D3000EC57E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7497EE471D7423D3000EC57E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7497EE491D7423D3000EC57E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7497EE4E1D7423D3000EC57E /* SNIconPickerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNIconPickerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7497EE521D7423D3000EC57E /* SNIconPickerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNIconPickerDemoTests.m; sourceTree = "<group>"; };
+		7497EE541D7423D3000EC57E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7497EE591D7423D3000EC57E /* SNIconPickerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNIconPickerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7497EE5D1D7423D3000EC57E /* SNIconPickerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SNIconPickerDemoUITests.m; sourceTree = "<group>"; };
+		7497EE5F1D7423D3000EC57E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7497EE6C1D742408000EC57E /* SNIconPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNIconPicker.h; sourceTree = "<group>"; };
+		7497EE6D1D742408000EC57E /* SNIconPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNIconPicker.m; sourceTree = "<group>"; };
+		7497EE6F1D743B99000EC57E /* SNIconPickerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNIconPickerConfig.h; sourceTree = "<group>"; };
+		7497EE701D7455E5000EC57E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7497EE721D745945000EC57E /* SNToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNToastView.h; sourceTree = "<group>"; };
+		7497EE731D745945000EC57E /* SNToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNToastView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7497EE321D7423D3000EC57E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7497EE711D7455E5000EC57E /* MobileCoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE4B1D7423D3000EC57E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE561D7423D3000EC57E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7497EE2C1D7423D3000EC57E = {
+			isa = PBXGroup;
+			children = (
+				7497EE701D7455E5000EC57E /* MobileCoreServices.framework */,
+				7497EE371D7423D3000EC57E /* SNIconPickerDemo */,
+				7497EE511D7423D3000EC57E /* SNIconPickerDemoTests */,
+				7497EE5C1D7423D3000EC57E /* SNIconPickerDemoUITests */,
+				7497EE361D7423D3000EC57E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7497EE361D7423D3000EC57E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE351D7423D3000EC57E /* SNIconPickerDemo.app */,
+				7497EE4E1D7423D3000EC57E /* SNIconPickerDemoTests.xctest */,
+				7497EE591D7423D3000EC57E /* SNIconPickerDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7497EE371D7423D3000EC57E /* SNIconPickerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE6B1D7423E4000EC57E /* SNIconPicker */,
+				7497EE3B1D7423D3000EC57E /* AppDelegate.h */,
+				7497EE3C1D7423D3000EC57E /* AppDelegate.m */,
+				7497EE3E1D7423D3000EC57E /* ViewController.h */,
+				7497EE3F1D7423D3000EC57E /* ViewController.m */,
+				7497EE411D7423D3000EC57E /* Main.storyboard */,
+				7497EE441D7423D3000EC57E /* Assets.xcassets */,
+				7497EE461D7423D3000EC57E /* LaunchScreen.storyboard */,
+				7497EE491D7423D3000EC57E /* Info.plist */,
+				7497EE381D7423D3000EC57E /* Supporting Files */,
+			);
+			path = SNIconPickerDemo;
+			sourceTree = "<group>";
+		};
+		7497EE381D7423D3000EC57E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE391D7423D3000EC57E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7497EE511D7423D3000EC57E /* SNIconPickerDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE521D7423D3000EC57E /* SNIconPickerDemoTests.m */,
+				7497EE541D7423D3000EC57E /* Info.plist */,
+			);
+			path = SNIconPickerDemoTests;
+			sourceTree = "<group>";
+		};
+		7497EE5C1D7423D3000EC57E /* SNIconPickerDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE5D1D7423D3000EC57E /* SNIconPickerDemoUITests.m */,
+				7497EE5F1D7423D3000EC57E /* Info.plist */,
+			);
+			path = SNIconPickerDemoUITests;
+			sourceTree = "<group>";
+		};
+		7497EE6B1D7423E4000EC57E /* SNIconPicker */ = {
+			isa = PBXGroup;
+			children = (
+				7497EE6C1D742408000EC57E /* SNIconPicker.h */,
+				7497EE6D1D742408000EC57E /* SNIconPicker.m */,
+				7497EE6F1D743B99000EC57E /* SNIconPickerConfig.h */,
+				7497EE721D745945000EC57E /* SNToastView.h */,
+				7497EE731D745945000EC57E /* SNToastView.m */,
+			);
+			path = SNIconPicker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7497EE341D7423D3000EC57E /* SNIconPickerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7497EE621D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemo" */;
+			buildPhases = (
+				7497EE311D7423D3000EC57E /* Sources */,
+				7497EE321D7423D3000EC57E /* Frameworks */,
+				7497EE331D7423D3000EC57E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SNIconPickerDemo;
+			productName = SNIconPickerDemo;
+			productReference = 7497EE351D7423D3000EC57E /* SNIconPickerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7497EE4D1D7423D3000EC57E /* SNIconPickerDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7497EE651D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoTests" */;
+			buildPhases = (
+				7497EE4A1D7423D3000EC57E /* Sources */,
+				7497EE4B1D7423D3000EC57E /* Frameworks */,
+				7497EE4C1D7423D3000EC57E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7497EE501D7423D3000EC57E /* PBXTargetDependency */,
+			);
+			name = SNIconPickerDemoTests;
+			productName = SNIconPickerDemoTests;
+			productReference = 7497EE4E1D7423D3000EC57E /* SNIconPickerDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7497EE581D7423D3000EC57E /* SNIconPickerDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7497EE681D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoUITests" */;
+			buildPhases = (
+				7497EE551D7423D3000EC57E /* Sources */,
+				7497EE561D7423D3000EC57E /* Frameworks */,
+				7497EE571D7423D3000EC57E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7497EE5B1D7423D3000EC57E /* PBXTargetDependency */,
+			);
+			name = SNIconPickerDemoUITests;
+			productName = SNIconPickerDemoUITests;
+			productReference = 7497EE591D7423D3000EC57E /* SNIconPickerDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7497EE2D1D7423D3000EC57E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Spectator;
+				TargetAttributes = {
+					7497EE341D7423D3000EC57E = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					7497EE4D1D7423D3000EC57E = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 7497EE341D7423D3000EC57E;
+					};
+					7497EE581D7423D3000EC57E = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 7497EE341D7423D3000EC57E;
+					};
+				};
+			};
+			buildConfigurationList = 7497EE301D7423D3000EC57E /* Build configuration list for PBXProject "SNIconPickerDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7497EE2C1D7423D3000EC57E;
+			productRefGroup = 7497EE361D7423D3000EC57E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7497EE341D7423D3000EC57E /* SNIconPickerDemo */,
+				7497EE4D1D7423D3000EC57E /* SNIconPickerDemoTests */,
+				7497EE581D7423D3000EC57E /* SNIconPickerDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7497EE331D7423D3000EC57E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7497EE481D7423D3000EC57E /* LaunchScreen.storyboard in Resources */,
+				7497EE451D7423D3000EC57E /* Assets.xcassets in Resources */,
+				7497EE431D7423D3000EC57E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE4C1D7423D3000EC57E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE571D7423D3000EC57E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7497EE311D7423D3000EC57E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7497EE401D7423D3000EC57E /* ViewController.m in Sources */,
+				7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */,
+				7497EE741D745945000EC57E /* SNToastView.m in Sources */,
+				7497EE3D1D7423D3000EC57E /* AppDelegate.m in Sources */,
+				7497EE3A1D7423D3000EC57E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE4A1D7423D3000EC57E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7497EE531D7423D3000EC57E /* SNIconPickerDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7497EE551D7423D3000EC57E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7497EE5E1D7423D3000EC57E /* SNIconPickerDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7497EE501D7423D3000EC57E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7497EE341D7423D3000EC57E /* SNIconPickerDemo */;
+			targetProxy = 7497EE4F1D7423D3000EC57E /* PBXContainerItemProxy */;
+		};
+		7497EE5B1D7423D3000EC57E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7497EE341D7423D3000EC57E /* SNIconPickerDemo */;
+			targetProxy = 7497EE5A1D7423D3000EC57E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7497EE411D7423D3000EC57E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7497EE421D7423D3000EC57E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7497EE461D7423D3000EC57E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7497EE471D7423D3000EC57E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7497EE601D7423D3000EC57E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7497EE611D7423D3000EC57E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7497EE631D7423D3000EC57E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SNIconPickerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7497EE641D7423D3000EC57E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SNIconPickerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7497EE661D7423D3000EC57E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SNIconPickerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNIconPickerDemo.app/SNIconPickerDemo";
+			};
+			name = Debug;
+		};
+		7497EE671D7423D3000EC57E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SNIconPickerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNIconPickerDemo.app/SNIconPickerDemo";
+			};
+			name = Release;
+		};
+		7497EE691D7423D3000EC57E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SNIconPickerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SNIconPickerDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		7497EE6A1D7423D3000EC57E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SNIconPickerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNIconPickerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SNIconPickerDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7497EE301D7423D3000EC57E /* Build configuration list for PBXProject "SNIconPickerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7497EE601D7423D3000EC57E /* Debug */,
+				7497EE611D7423D3000EC57E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7497EE621D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7497EE631D7423D3000EC57E /* Debug */,
+				7497EE641D7423D3000EC57E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7497EE651D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7497EE661D7423D3000EC57E /* Debug */,
+				7497EE671D7423D3000EC57E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7497EE681D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7497EE691D7423D3000EC57E /* Debug */,
+				7497EE6A1D7423D3000EC57E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7497EE2D1D7423D3000EC57E /* Project object */;
+}
