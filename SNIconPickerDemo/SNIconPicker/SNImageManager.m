@@ -16,13 +16,17 @@
 #pragma mark -- out
 @property (nonatomic, assign) BOOL sortAscendingByModificationDate;
 - (BOOL)getAuthorizationStatus;
+/// Default is 600px / 默认600像素宽
+@property (nonatomic, assign) CGFloat photoPreviewMaxWidth;
+
+#pragma mark -- in
 
 @end
 
 
 static CGFloat SNScreenWidth;
 static CGFloat SNScreenScale;
-
+static CGSize  SNMinAssetGridThumbnailSize;
 
 @implementation SNImageManager
 
@@ -38,6 +42,11 @@ static CGFloat SNScreenScale;
         
         SNScreenScale = [UIScreen mainScreen].scale;
         SNScreenWidth = [UIScreen mainScreen].bounds.size.width;
+        
+        
+        CGFloat margin = 4;
+        CGFloat itemWH = (SNScreenWidth - 3*margin) / 2;
+        SNMinAssetGridThumbnailSize = CGSizeMake(itemWH * SNScreenScale, itemWH * SNScreenScale);
     });
     
     return manager;
@@ -60,7 +69,7 @@ static CGFloat SNScreenScale;
 #pragma mark -- get Album
 
 // 获取相册数组
-- (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *))completion {
+- (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *album))completion {
     
     __block SNAlbumModel *albumModel;
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
@@ -94,7 +103,7 @@ static CGFloat SNScreenScale;
     }
 }
 
-- (void)getAllAlbums:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *))completion {
+- (void)getAllAlbums:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *albums))completion {
     
     NSMutableArray *albums = [NSMutableArray array];
     
@@ -152,10 +161,10 @@ static CGFloat SNScreenScale;
     }
 }
 
-#pragma mark -- get photo
+#pragma mark -- get asset
 // 获取照片数组
 
-- (void)getPhotosFromFetch:(PHFetchResult *)result allowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(NSArray<SNAlbumModel *> *))completion {
+- (void)getAssetsFromFetch:(PHFetchResult *)result allowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(NSArray<SNAlbumModel *> * assets))completion {
     
     NSMutableArray *photos = [NSMutableArray array];
     
@@ -181,11 +190,171 @@ static CGFloat SNScreenScale;
         
         NSString *timeLength = type == SNAssetModelMediaTypeVideo ? [NSString stringWithFormat:@"%0.0f",asset.duration] : @"";
         timeLength = [self getNewTimeFromDurationSecond:timeLength.integerValue];
+        
+        [photos addObject:[SNAssetModel modelWithAsset:asset type:type timeLength:timeLength]];
     }];
+    
+    
+    if (completion) {
+        completion(photos);
+    }
+}
+
+// 获取下标为index的单个照片
+// 如果索引越界，在回调中返回nil
+- (void)getAssetFromFetchResult:(PHFetchResult *)result atIndex:(NSInteger )index allowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAssetModel *model))completion {
+    
+    PHAsset *asset;
+    
+    @try {
+        asset = result[index];
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            completion(nil);
+        }
+        return;
+    }
+   
+    SNAssetModelMediaType type = SNAssetModelMediaTypePhoto;
+    if (asset.mediaType == PHAssetMediaTypeAudio) {
+        type = SNAssetModelMediaTypeAudio;
+    } else if (asset.mediaType == PHAssetMediaTypeVideo) {
+        type = SNAssetModelMediaTypeVideo;
+    }
+    
+    NSString *timeLength = type == SNAssetModelMediaTypeVideo ? [NSString stringWithFormat:@"%0.0f",asset.duration] : @"";
+    timeLength = [self getNewTimeFromDurationSecond:timeLength.integerValue];
+    
+    SNAssetModel *model = [SNAssetModel modelWithAsset:asset type:type timeLength:timeLength];
+    
+    if (completion) {
+        completion(model);
+    }
+}
+
+#pragma mark -- get photo
+// 获取一组照片的大小
+- (void)getPhotosBytesWithArray:(NSArray *)photos completion:(void(^)(NSString *totalBytes))comletion {
+    
+    __block NSInteger dataLength = 0;
+    __block NSInteger assetCount = 0;
+    
+    for (int i = 0; i < photos.count; i ++) {
+        
+        SNAssetModel *model = photos[i];
+        
+        [[PHImageManager defaultManager] requestImageDataForAsset:model.asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+           
+            if (model.type != SNAssetModelMediaTypeVideo) {
+                dataLength += imageData.length;
+            }
+            
+            assetCount ++;
+            
+            if (assetCount >= photos.count) {
+                NSString *bytes = [self getBytesFromDataLength:dataLength];
+                
+                if (comletion) {
+                    comletion(bytes);
+                }
+            }
+        }];
+    }
     
 }
 
+
+- (PHImageRequestID)getPhotoWithAsset:(PHAsset *)asset completion:(void(^)(UIImage *image, NSDictionary* info, BOOL isDegraded))completion {
+    
+    CGFloat fullScreenWidth = SNScreenWidth;
+    
+    if (fullScreenWidth > _photoPreviewMaxWidth) {
+        fullScreenWidth = _photoPreviewMaxWidth;
+    }
+    
+    return [self getPhotoWithAsset:asset photoWidth:fullScreenWidth completion:completion];
+}
+
+- (PHImageRequestID)getPhotoWithAsset:(PHAsset *)asset photoWidth:(CGFloat )photoWidth completion:(void(^)(UIImage *image, NSDictionary* info, BOOL isDegraded))completion {
+    
+    CGSize imageSize;
+    
+    if (photoWidth < SNScreenWidth && photoWidth < _photoPreviewMaxWidth) {
+        imageSize = SNMinAssetGridThumbnailSize;
+    } else {
+        // 除数强转float 保留结果有小数
+        CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
+        CGFloat pixelWidth = photoWidth * SNScreenScale;
+        CGFloat pixelHeight = pixelWidth / aspectRatio;
+        imageSize = CGSizeMake(pixelWidth, pixelHeight);
+    }
+    
+    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+    option.resizeMode = PHImageRequestOptionsResizeModeFast;
+    
+    PHImageRequestID imageRequestID = [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:imageSize contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        
+        BOOL finish = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey];
+        
+        if (finish && result) {
+            
+            result = [self fixOrientation:result];
+            
+            if (completion) {
+                completion(result,info,[[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+            }
+            
+                    }
+        if ([info objectForKey:PHImageResultIsInCloudKey] && !result) {
+            
+            PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+            
+            option.networkAccessAllowed = YES;
+            option.resizeMode = PHImageRequestOptionsResizeModeFast;
+            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:option resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                UIImage *resultImage = [UIImage imageWithData:imageData];
+                resultImage = [self scaleImage:resultImage toSize:imageSize];
+                
+                if (resultImage) {
+                    resultImage = [self fixOrientation:resultImage];
+                    
+                    if (completion) {
+                        completion(resultImage,info,[[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+                    }
+                }
+            }];
+        }
+
+    }];
+    
+    return imageRequestID;
+}
+
 #pragma mark -- data handler
+- (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size {
+    if (image.size.width > size.width) {
+        UIGraphicsBeginImageContext(size);
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return newImage;
+    } else {
+        return image;
+    }
+}
+
+- (NSString *)getBytesFromDataLength:(NSInteger)dataLength {
+    NSString *bytes;
+    if (dataLength >= 0.1 * (1024 * 1024)) {
+        bytes = [NSString stringWithFormat:@"%0.1fM",dataLength/1024/1024.0];
+    } else if (dataLength >= 1024) {
+        bytes = [NSString stringWithFormat:@"%0.0fK",dataLength/1024.0];
+    } else {
+        bytes = [NSString stringWithFormat:@"%zdB",dataLength];
+    }
+    return bytes;
+}
 
 - (SNAlbumModel *)modelWithResult:(PHFetchResult *)result name:(NSString *)name {
     
@@ -216,5 +385,86 @@ static CGFloat SNScreenScale;
         }
     }
     return newTime;
+}
+
+
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp) {
+        return aImage;
+    }
+    
+    
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
 }
 @end
