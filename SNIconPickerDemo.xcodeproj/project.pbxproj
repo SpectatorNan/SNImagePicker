@@ -18,6 +18,8 @@
 		7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE6D1D742408000EC57E /* SNIconPicker.m */; };
 		7497EE711D7455E5000EC57E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7497EE701D7455E5000EC57E /* MobileCoreServices.framework */; };
 		7497EE741D745945000EC57E /* SNToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE731D745945000EC57E /* SNToastView.m */; };
+		7497EE771D751EA2000EC57E /* SNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE761D751EA2000EC57E /* SNImageManager.m */; };
+		7497EE7A1D752715000EC57E /* SNAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE791D752715000EC57E /* SNAlbumModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		7497EE701D7455E5000EC57E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7497EE721D745945000EC57E /* SNToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNToastView.h; sourceTree = "<group>"; };
 		7497EE731D745945000EC57E /* SNToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNToastView.m; sourceTree = "<group>"; };
+		7497EE751D751EA2000EC57E /* SNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNImageManager.h; sourceTree = "<group>"; };
+		7497EE761D751EA2000EC57E /* SNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNImageManager.m; sourceTree = "<group>"; };
+		7497EE781D752715000EC57E /* SNAlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNAlbumModel.h; sourceTree = "<group>"; };
+		7497EE791D752715000EC57E /* SNAlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNAlbumModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +166,10 @@
 				7497EE6F1D743B99000EC57E /* SNIconPickerConfig.h */,
 				7497EE721D745945000EC57E /* SNToastView.h */,
 				7497EE731D745945000EC57E /* SNToastView.m */,
+				7497EE751D751EA2000EC57E /* SNImageManager.h */,
+				7497EE761D751EA2000EC57E /* SNImageManager.m */,
+				7497EE781D752715000EC57E /* SNAlbumModel.h */,
+				7497EE791D752715000EC57E /* SNAlbumModel.m */,
 			);
 			path = SNIconPicker;
 			sourceTree = "<group>";
@@ -294,9 +304,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7497EE771D751EA2000EC57E /* SNImageManager.m in Sources */,
 				7497EE401D7423D3000EC57E /* ViewController.m in Sources */,
 				7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */,
 				7497EE741D745945000EC57E /* SNToastView.m in Sources */,
+				7497EE7A1D752715000EC57E /* SNAlbumModel.m in Sources */,
 				7497EE3D1D7423D3000EC57E /* AppDelegate.m in Sources */,
 				7497EE3A1D7423D3000EC57E /* main.m in Sources */,
 			);
