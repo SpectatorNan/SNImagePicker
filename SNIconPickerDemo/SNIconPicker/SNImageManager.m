@@ -331,6 +331,42 @@ static CGSize  SNMinAssetGridThumbnailSize;
     return imageRequestID;
 }
 
+// 获取封面图
+- (void)getPostImageWithAlbumModel:(SNAlbumModel *)model completion:(void(^)(UIImage *))completion {
+    
+    id asset = [model.result lastObject];
+    
+    if (!self.sortAscendingByModificationDate) {
+        asset = [model.result firstObject];
+    }
+    
+    [[SNImageManager manager] getPhotoWithAsset:asset photoWidth:80 completion:^(UIImage *image, NSDictionary *info, BOOL isDegraded) {
+        if (completion) {
+            completion(image);
+        }
+    }];
+}
+
+// 获取原图
+- (void)getOriginalPhotoWithAsset:(PHAsset *)asset completion:(void (^)(UIImage *photo, NSDictionary *info))completion {
+    
+    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+    option.networkAccessAllowed = YES;
+    
+    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        
+        BOOL finished = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey];
+        
+        if (finished && result) {
+            result = [self fixOrientation:result];
+            
+            if (completion) {
+                completion(result, info);
+            }
+        }
+    }];
+}
+
 #pragma mark -- data handler
 - (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size {
     if (image.size.width > size.width) {
