@@ -9,9 +9,9 @@
 #import "SNIconPicker.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "SNToastView.h"
+#import <objc/runtime.h>
 
 @interface SNIconPicker ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
 
 - (UIWindow *)currentVisibleWindow;
 - (UIViewController *)currentVisibleController;
@@ -52,7 +52,7 @@
     UIAlertController *alertController = [[UIAlertController alloc] init];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        
+        [self.currentVisibleController dismissViewControllerAnimated:YES completion:nil];
     }];
     UIAlertAction *takePhotoAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self takePhotoFromCamera];
@@ -129,7 +129,12 @@
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];
-//        imagePicker.mediaPicker = self;
+        
+        
+//        避免self对象被释放，不是现代理
+        imagePicker.mediaPicker = self;
+        
+        
 //        [self delegatePerformWillPresentImagePicker:imagePicker];
         [self.currentVisibleController presentViewController:imagePicker animated:YES completion:nil];
     } else {
@@ -137,5 +142,39 @@
         [SNToastView sn_showToastTitle:@"无法读取相册" inView:self.currentVisibleController.view];
     }
 }
+
+
+#pragma mark -- 
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+    navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    
+//    NSString *VCName = NSStringFromClass(viewController);
+   const char *VCName = class_getName(viewController.class);
+    
+    
+    NSLog(@"");
+}
+
+
+@end
+
+static const char * mdiaPickerKey;
+
+@implementation UIImagePickerController (SNIconPicker)
+
+- (void)setMediaPicker:(SNIconPicker *)mediaPicker
+{
+    objc_setAssociatedObject(self, &mdiaPickerKey, mediaPicker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+}
+
+- (SNIconPicker *)mediaPicker
+{
+    return objc_getAssociatedObject(self, &mdiaPickerKey);
+
+}
+
 
 @end

@@ -29,3 +29,12 @@
 
 
 @end
+
+
+@interface UIImagePickerController (SNIconPicker)
+
+@property (strong, nonatomic) SNIconPicker *mediaPicker;
+
+@end
+
+

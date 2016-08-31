@@ -367,7 +367,132 @@ static CGSize  SNMinAssetGridThumbnailSize;
     }];
 }
 
+#pragma mark -- save photo
+
+- (void)savePhotoWithImage:(UIImage *)image comletion:(void(^)())completion {
+    
+    NSData *data = UIImageJPEGRepresentation(image, 0.9);
+//    听说iOS8 会保存失败
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetResourceCreationOptions *options = [[PHAssetResourceCreationOptions alloc] init];
+        options.shouldMoveFile = YES;
+        [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+       dispatch_sync(dispatch_get_main_queue(), ^{
+          
+           if (success && completion) {
+               completion();
+           } else {
+               NSLog(@"报错照片出错： %@",error.localizedDescription);
+           }
+       });
+    }];
+}
+
+#pragma mark -- get Video
+
+- (void)getVideoWithAsset:(PHAsset *)asset completion:(void (^)(AVPlayerItem * _Nullable, NSDictionary * _Nullable))completion {
+    
+    [[PHImageManager defaultManager] requestPlayerItemForVideo:asset options:nil resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+       
+        if (completion) {
+            completion(playerItem, info);
+        }
+    }];
+    
+}
+
+#pragma mark -- export Video
+
+- (void)exportVideoOutPathWithAsset:(PHAsset *)asset completion:(void (^)(NSString *outputPath))completion {
+    
+    PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+    options.version = PHVideoRequestOptionsVersionOriginal;
+    options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+    options.networkAccessAllowed = YES;
+    
+    [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable avasset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+        
+        AVURLAsset *videoAsset = (AVURLAsset *)avasset;
+        
+        [self startExportVideoWithVideoAsset:videoAsset completion:completion];
+    }];
+}
+
+- (void)startExportVideoWithVideoAsset:(AVURLAsset *)videoAsset completion:(void (^)(NSString *outputPath))completion {
+    // Find compatible presets by video asset.
+    NSArray *presets = [AVAssetExportSession exportPresetsCompatibleWithAsset:videoAsset];
+    
+    // Begin to compress video
+    // Now we just compress to low resolution if it supports
+    // If you need to upload to the server, but server does't support to upload by streaming,
+    // You can compress the resolution to lower. Or you can support more higher resolution.
+    if ([presets containsObject:AVAssetExportPreset640x480]) {
+        
+        AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:videoAsset presetName:AVAssetExportPreset640x480];
+        
+        NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+        NSString *outputPath = [NSHomeDirectory() stringByAppendingFormat:@"/tmp/output-%@.mp4",[formater stringFromDate:[NSDate date]]];
+        
+        session.outputURL = [NSURL fileURLWithPath:outputPath];
+        
+        session.shouldOptimizeForNetworkUse = true;
+        
+        NSArray *supportedTypeArray = session.supportedFileTypes;
+        
+        if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
+            session.outputFileType = AVFileTypeMPEG4;
+        } else if (supportedTypeArray.count == 0) {
+            NSLog(@"当前视频暂不支持导出");
+        } else {
+            session.outputFileType = [supportedTypeArray objectAtIndex:0];
+        }
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingString:@"/tm["]]) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:[NSHomeDirectory() stringByAppendingFormat:@"/tmp"] withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+    
+        // Begin to export video to the output path asynchronously.
+        [session exportAsynchronouslyWithCompletionHandler:^(void) {
+            switch (session.status) {
+                case AVAssetExportSessionStatusUnknown:
+                    NSLog(@"AVAssetExportSessionStatusUnknown"); break;
+                case AVAssetExportSessionStatusWaiting:
+                    NSLog(@"AVAssetExportSessionStatusWaiting"); break;
+                case AVAssetExportSessionStatusExporting:
+                    NSLog(@"AVAssetExportSessionStatusExporting"); break;
+                case AVAssetExportSessionStatusCompleted: {
+                    NSLog(@"AVAssetExportSessionStatusCompleted");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (completion) {
+                            completion(outputPath);
+                        }
+                    });
+                }  break;
+                case AVAssetExportSessionStatusFailed:
+                    NSLog(@"AVAssetExportSessionStatusFailed"); break;
+                default: break;
+            }
+        }];
+
+    }
+}
 #pragma mark -- data handler
+// 判断assets时候包含asset
+- (BOOL)isAssetArray:(NSArray *)assets containAsset:(PHAsset *)asset {
+    
+    return [assets containsObject:asset];
+}
+
+
+// 获取asset的identifier
+- (NSString*)getAssetIdentifier:(PHAsset *)asset {
+    
+    return asset.localIdentifier;
+}
+
+// 改变图片大小
 - (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)size {
     if (image.size.width > size.width) {
         UIGraphicsBeginImageContext(size);
@@ -380,6 +505,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     }
 }
 
+// 获取图片大小
 - (NSString *)getBytesFromDataLength:(NSInteger)dataLength {
     NSString *bytes;
     if (dataLength >= 0.1 * (1024 * 1024)) {
@@ -392,6 +518,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     return bytes;
 }
 
+// PHFetchResult 转 相册模型
 - (SNAlbumModel *)modelWithResult:(PHFetchResult *)result name:(NSString *)name {
     
     SNAlbumModel *model = [[SNAlbumModel alloc] init];
@@ -404,7 +531,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     return model;
 }
 
-
+// 格式化时长
 - (NSString *)getNewTimeFromDurationSecond:(NSInteger)duration {
     NSString *newTime;
     if (duration < 10) {
@@ -423,7 +550,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     return newTime;
 }
 
-
+// 调整图方向
 - (UIImage *)fixOrientation:(UIImage *)aImage {
     
     // No-op if the orientation is already correct

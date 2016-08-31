@@ -11,6 +11,8 @@
 
 @interface ViewController ()<SNIconPickerDelegate>
 
+@property (nonatomic, strong) SNIconPicker *pick;
+
 @end
 
 @implementation ViewController
@@ -28,7 +30,7 @@
     
     SNIconPicker *picker = [[SNIconPicker alloc] initWithDelegate:self];
     picker.takePhotoButtonStyle = SNIconPickerPhotoButtonStyleAlertSheet;
-    
+    self.pick = picker;
     [picker show];
 }
 
