@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		746855481D77B20E00DBB16A /* SNImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 746855471D77B20E00DBB16A /* SNImagePickerController.m */; };
+		7469BBC71D782D7100FCEAEF /* SNImagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBC61D782D7100FCEAEF /* SNImagePreviewViewController.m */; };
+		7469BBCA1D782D9800FCEAEF /* SNVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */; };
+		7469BBD01D782DF000FCEAEF /* SNPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */; };
 		7497EE3A1D7423D3000EC57E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE391D7423D3000EC57E /* main.m */; };
 		7497EE3D1D7423D3000EC57E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3C1D7423D3000EC57E /* AppDelegate.m */; };
 		7497EE401D7423D3000EC57E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3F1D7423D3000EC57E /* ViewController.m */; };
@@ -40,6 +44,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		746855461D77B20E00DBB16A /* SNImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNImagePickerController.h; sourceTree = "<group>"; };
+		746855471D77B20E00DBB16A /* SNImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNImagePickerController.m; sourceTree = "<group>"; };
+		7469BBC51D782D7100FCEAEF /* SNImagePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNImagePreviewViewController.h; sourceTree = "<group>"; };
+		7469BBC61D782D7100FCEAEF /* SNImagePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNImagePreviewViewController.m; sourceTree = "<group>"; };
+		7469BBC81D782D9800FCEAEF /* SNVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNVideoPlayerViewController.h; sourceTree = "<group>"; };
+		7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNVideoPlayerViewController.m; sourceTree = "<group>"; };
+		7469BBCE1D782DF000FCEAEF /* SNPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNPhotoPickerViewController.h; sourceTree = "<group>"; };
+		7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNPhotoPickerViewController.m; sourceTree = "<group>"; };
 		7497EE351D7423D3000EC57E /* SNIconPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNIconPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7497EE391D7423D3000EC57E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7497EE3B1D7423D3000EC57E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -170,6 +182,14 @@
 				7497EE761D751EA2000EC57E /* SNImageManager.m */,
 				7497EE781D752715000EC57E /* SNAlbumModel.h */,
 				7497EE791D752715000EC57E /* SNAlbumModel.m */,
+				746855461D77B20E00DBB16A /* SNImagePickerController.h */,
+				746855471D77B20E00DBB16A /* SNImagePickerController.m */,
+				7469BBC51D782D7100FCEAEF /* SNImagePreviewViewController.h */,
+				7469BBC61D782D7100FCEAEF /* SNImagePreviewViewController.m */,
+				7469BBC81D782D9800FCEAEF /* SNVideoPlayerViewController.h */,
+				7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */,
+				7469BBCE1D782DF000FCEAEF /* SNPhotoPickerViewController.h */,
+				7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */,
 			);
 			path = SNIconPicker;
 			sourceTree = "<group>";
@@ -304,8 +324,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7469BBCA1D782D9800FCEAEF /* SNVideoPlayerViewController.m in Sources */,
 				7497EE771D751EA2000EC57E /* SNImageManager.m in Sources */,
 				7497EE401D7423D3000EC57E /* ViewController.m in Sources */,
+				7469BBC71D782D7100FCEAEF /* SNImagePreviewViewController.m in Sources */,
+				7469BBD01D782DF000FCEAEF /* SNPhotoPickerViewController.m in Sources */,
+				746855481D77B20E00DBB16A /* SNImagePickerController.m in Sources */,
 				7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */,
 				7497EE741D745945000EC57E /* SNToastView.m in Sources */,
 				7497EE7A1D752715000EC57E /* SNAlbumModel.m in Sources */,
@@ -536,6 +560,7 @@
 				7497EE641D7423D3000EC57E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7497EE651D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +569,7 @@
 				7497EE671D7423D3000EC57E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7497EE681D7423D3000EC57E /* Build configuration list for PBXNativeTarget "SNIconPickerDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +578,7 @@
 				7497EE6A1D7423D3000EC57E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

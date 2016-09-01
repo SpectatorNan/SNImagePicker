@@ -7,17 +7,13 @@
 //
 
 #import "SNImageManager.h"
-#import <Photos/Photos.h>
-#import "SNAlbumModel.h"
+
+
 
 
 @interface SNImageManager ()
 
 #pragma mark -- out
-@property (nonatomic, assign) BOOL sortAscendingByModificationDate;
-- (BOOL)getAuthorizationStatus;
-/// Default is 600px / 默认600像素宽
-@property (nonatomic, assign) CGFloat photoPreviewMaxWidth;
 
 #pragma mark -- in
 
@@ -505,6 +501,40 @@ static CGSize  SNMinAssetGridThumbnailSize;
     }
 }
 
+- (NSString *)getNewAlbumName:(NSString *)name {
+    
+    NSString *newName;
+    if ([name rangeOfString:@"Roll"].location != NSNotFound)  {
+        newName = @"相机胶卷";
+    }
+    else if ([name rangeOfString:@"Stream"].location != NSNotFound) {
+        newName = @"我的照片流";
+    }
+    else if ([name rangeOfString:@"Added"].location != NSNotFound)  {
+        newName = @"最近添加";
+    }
+    else if ([name rangeOfString:@"Selfies"].location != NSNotFound) {
+        newName = @"自拍";
+    }
+    else if ([name rangeOfString:@"shots"].location != NSNotFound)  {
+        newName = @"截屏";
+    }
+    else if ([name rangeOfString:@"Videos"].location != NSNotFound)  {
+        newName = @"视频";
+    }
+    else if ([name rangeOfString:@"Panoramas"].location != NSNotFound) {
+        newName = @"全景照片";
+    }
+    else if ([name rangeOfString:@"Favorites"].location != NSNotFound) {
+        newName = @"个人收藏";
+    }
+    else {
+        newName = name;
+    }
+    return newName;
+    
+}
+
 // 获取图片大小
 - (NSString *)getBytesFromDataLength:(NSInteger)dataLength {
     NSString *bytes;
@@ -524,7 +554,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     SNAlbumModel *model = [[SNAlbumModel alloc] init];
     
     model.result = result;
-    model.name = name;
+    model.name = [self getNewAlbumName:name];
         
     model.count = result.count;
     

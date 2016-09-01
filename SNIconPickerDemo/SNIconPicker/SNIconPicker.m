@@ -131,7 +131,7 @@
         imagePicker.mediaTypes = @[(NSString *)kUTTypeImage];
         
         
-//        避免self对象被释放，不是现代理
+//        避免self对象被释放，不实现代理
         imagePicker.mediaPicker = self;
         
         
@@ -149,6 +149,7 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     
     navigationController.navigationBar.barTintColor = [UIColor blackColor];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
 //    NSString *VCName = NSStringFromClass(viewController);
    const char *VCName = class_getName(viewController.class);
@@ -176,5 +177,8 @@ static const char * mdiaPickerKey;
 
 }
 
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleLightContent;
+}
 @end
