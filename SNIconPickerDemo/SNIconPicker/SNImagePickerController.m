@@ -91,7 +91,13 @@
 
 - (instancetype)initWithMaxImageCount:(NSUInteger)maxImageCount delegate:(id<SNImagePickerControllerDelegate>)delegate {
     
+    return [self initWithMaxImageCount:maxImageCount columnNumber:4 delegate:delegate];
+}
+
+- (instancetype)initWithMaxImageCount:(NSUInteger)maxImageCount columnNumber:(NSUInteger)columnNumber delegate:(id<SNImagePickerControllerDelegate>)delegate {
+    
     SNAlbumPickerController *albumVC = [[SNAlbumPickerController alloc] init];
+    albumVC.columnNumber = columnNumber;
     
     self = [super initWithRootViewController:albumVC];
     
@@ -101,7 +107,7 @@
         self.imagePickerDelegate = delegate;
         self.selectedModels = [NSMutableArray array];
         
-//        默认允许用户选择视频和原图，可以在该方法之后自定义设置
+        //        默认允许用户选择视频和原图，可以在该方法之后自定义设置
         self.allowPickingImage = YES;
         self.allowPickingVideo = YES;
         self.allowPickingOriginalPhoto = YES;

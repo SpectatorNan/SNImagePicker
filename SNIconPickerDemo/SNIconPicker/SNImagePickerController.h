@@ -30,4 +30,6 @@
 
 @interface SNAlbumPickerController : UIViewController
 
+@property (nonatomic,assign) NSUInteger  columnNumber;
+
 @end
