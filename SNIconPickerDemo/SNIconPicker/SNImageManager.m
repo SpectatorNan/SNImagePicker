@@ -40,12 +40,18 @@ static CGSize  SNMinAssetGridThumbnailSize;
         SNScreenWidth = [UIScreen mainScreen].bounds.size.width;
         
         
-        CGFloat margin = 4;
-        CGFloat itemWH = (SNScreenWidth - 3*margin) / 2;
-        SNMinAssetGridThumbnailSize = CGSizeMake(itemWH * SNScreenScale, itemWH * SNScreenScale);
+        
     });
     
     return manager;
+}
+
+- (void)setColumnNumber:(NSInteger)columnNumber {
+    _columnNumber = columnNumber;
+    
+    CGFloat margin = 4;
+    CGFloat itemWH = (SNScreenWidth - (columnNumber+1)*margin) / columnNumber;
+    SNMinAssetGridThumbnailSize = CGSizeMake(itemWH * SNScreenScale, itemWH * SNScreenScale);
 }
 
 /**
@@ -65,7 +71,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
 #pragma mark -- get Album
 
 // 获取相册数组
-- (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *album))completion {
+- (void)getCameraRollAlbumAllowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *album))completion {
     
     __block SNAlbumModel *albumModel;
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
@@ -99,7 +105,7 @@ static CGSize  SNMinAssetGridThumbnailSize;
     }
 }
 
-- (void)getAllAlbums:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *albums))completion {
+- (void)getAllAlbumsAllowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *albums))completion {
     
     NSMutableArray *albums = [NSMutableArray array];
     
@@ -363,6 +369,22 @@ static CGSize  SNMinAssetGridThumbnailSize;
     }];
 }
 
+- (void)getOriginalPhotoDataWithAsset:(PHAsset *)asset completion:(void (^)(NSData *, NSDictionary *))completion {
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.networkAccessAllowed = YES;
+    
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        BOOL finished = ![[info objectForKey:PHImageCancelledKey]boolValue] && ![info objectForKey:PHImageErrorKey];
+        
+        if (finished && imageData) {
+            if (completion) {
+                completion(imageData, info);
+            }
+        }
+    }];
+}
+
 #pragma mark -- save photo
 
 - (void)savePhotoWithImage:(UIImage *)image comletion:(void(^)())completion {
@@ -479,6 +501,22 @@ static CGSize  SNMinAssetGridThumbnailSize;
 - (BOOL)isAssetArray:(NSArray *)assets containAsset:(PHAsset *)asset {
     
     return [assets containsObject:asset];
+}
+
+- (BOOL)isCameraRollAlbum:(NSString *)albumName {
+    NSString *versionStr = [[UIDevice currentDevice].systemVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
+    if (versionStr.length <= 1) {
+        versionStr = [versionStr stringByAppendingString:@"00"];
+    } else if (versionStr.length <= 2) {
+        versionStr = [versionStr stringByAppendingString:@"0"];
+    }
+    CGFloat version = versionStr.floatValue;
+    // 目前已知8.0.0 - 8.0.2系统，拍照后的图片会保存在最近添加中
+    if (version >= 800 && version <= 802) {
+        return [albumName isEqualToString:@"最近添加"] || [albumName isEqualToString:@"Recently Added"];
+    } else {
+        return [albumName isEqualToString:@"Camera Roll"] || [albumName isEqualToString:@"相机胶卷"] || [albumName isEqualToString:@"所有照片"] || [albumName isEqualToString:@"All Photos"];
+    }
 }
 
 

@@ -20,8 +20,10 @@
 /// Default is 600px / 默认600像素宽
 @property (nonatomic, assign) CGFloat photoPreviewMaxWidth;
 
-- (void)getCameraRollAlbum:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *album))completion;
-- (void)getAllAlbums:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *albums))completion;
+@property (nonatomic, assign) NSInteger columnNumber;
+
+- (void)getCameraRollAlbumAllowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAlbumModel *album))completion;
+- (void)getAllAlbumsAllowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void (^)(NSArray<SNAlbumModel *> *albums))completion;
 
 - (void)getAssetsFromFetch:(PHFetchResult *)result allowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(NSArray<SNAlbumModel *> * assets))completion;
 - (void)getAssetFromFetchResult:(PHFetchResult *)result atIndex:(NSInteger )index allowPickingVideo:(BOOL)allowPickingVideo allowPickingImage:(BOOL)allowPickingImage completion:(void(^)(SNAssetModel *model))completion;
@@ -32,6 +34,7 @@
 - (PHImageRequestID)getPhotoWithAsset:(PHAsset *)asset completion:(void(^)(UIImage *image, NSDictionary* info, BOOL isDegraded))completion;
 - (PHImageRequestID)getPhotoWithAsset:(PHAsset *)asset photoWidth:(CGFloat )photoWidth completion:(void(^)(UIImage *image, NSDictionary* info, BOOL isDegraded))completion;
 - (void)getOriginalPhotoWithAsset:(PHAsset *)asset completion:(void (^)(UIImage *photo, NSDictionary *info))completion;
+- (void)getOriginalPhotoDataWithAsset:(PHAsset *)asset completion:(void (^)(NSData *data,NSDictionary *info))completion;
 
 - (void)savePhotoWithImage:(UIImage *)image comletion:(void(^)())completion;
 
@@ -41,6 +44,7 @@
 
 
 - (BOOL)isAssetArray:(NSArray *)assets containAsset:(PHAsset *)asset;
+- (BOOL)isCameraRollAlbum:(NSString *)albumName;
 
 - (NSString *)getAssetIdentifier:(PHAsset  * )asset;
 

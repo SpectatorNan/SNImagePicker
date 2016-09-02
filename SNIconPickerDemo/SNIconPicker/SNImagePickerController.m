@@ -8,8 +8,8 @@
 
 #import "SNImagePickerController.h"
 #import "SNImageManager.h"
-
-
+#import "SNImagePreviewViewController.h"
+#import "SNPhotoPickerViewController.h"
 
 #define kNavigationBarBackColor [UIColor colorWithRed:(34/255.0) green:(34/255.0)  blue:(34/255.0) alpha:1.0]
 #define kOkBtnColorNormal [UIColor colorWithRed:(83/255.0) green:(179/255.0) blue:(17/255.0) alpha:1.0];
@@ -21,10 +21,18 @@
 {
     NSTimer * _timer;
     UILabel * _tipLable;
+    UIButton *_settingBtn;
+    BOOL _pushToPhotoPickerVc;
 }
+
+/// Default is 4, Use in photos collectionView in TZPhotoPickerController
+/// 默认4列, TZPhotoPickerController中的照片collectionView
+@property (nonatomic, assign) NSInteger columnNumber;
+
 #pragma mark -- out
 // 用户选取的照片数组
 @property (nonatomic, strong) NSMutableArray *selectedModels;
+@property (nonatomic, strong) NSMutableArray *selectedAssets;
 // 是否允许选取原图
 @property (nonatomic, assign) BOOL allowPickingOriginalPhoto;
 // 是否允许选取视频
@@ -39,6 +47,7 @@
 @property (nonatomic, assign) CGFloat photoPreviweMaxWidth;
 // 是否按照修改日期排序
 @property (nonatomic, assign) BOOL sortAscendingByModificationDate;
+
 
 @end
 
@@ -97,13 +106,13 @@
 - (instancetype)initWithMaxImageCount:(NSUInteger)maxImageCount columnNumber:(NSUInteger)columnNumber delegate:(id<SNImagePickerControllerDelegate>)delegate {
     
     SNAlbumPickerController *albumVC = [[SNAlbumPickerController alloc] init];
-    albumVC.columnNumber = columnNumber;
+//    albumVC.columnNumber = columnNumber;
     
     self = [super initWithRootViewController:albumVC];
     
     if (self) {
         // 最多选取为9张
-        self.maxImageCount = maxImageCount > 0 && maxImageCount < 10 ? maxImageCount : 9;
+        self.maxImageCount = maxImageCount;
         self.imagePickerDelegate = delegate;
         self.selectedModels = [NSMutableArray array];
         
@@ -116,7 +125,8 @@
         self.photoWidth = 828.0;
         self.photoPreviweMaxWidth = 600.0;
         self.sortAscendingByModificationDate = YES;
-        
+        self.columnNumber = columnNumber;
+//        [self defaultImageName];
         
         if (![[SNImageManager manager] getAuthorizationStatus]) {
             _tipLable = [[UILabel alloc] init];
@@ -130,6 +140,15 @@
             _tipLable.text = [NSString stringWithFormat:@"请在%@的\"设置-隐私-照片\"选项中，\r允许%@访问你的手机相册。",[UIDevice currentDevice].model,appName];
             [self.view addSubview:_tipLable];
             
+            
+            _settingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+            [_settingBtn setTitle:@"Setting" forState:UIControlStateNormal];
+            _settingBtn.frame = CGRectMake(0, 180, self.view.frame.size.width, 44);
+            _settingBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+            [_settingBtn addTarget:self action:@selector(settingBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:_settingBtn];
+            
+            
             _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(observeAuthrizationStatusChange) userInfo:nil repeats:YES];
         } else {
             
@@ -140,16 +159,165 @@
     return self;
 }
 
+// 预览图片
+- (instancetype)initWithSelectedAsset:(NSMutableArray *)selectedAssets selectedPhotos:(NSMutableArray *)selectedPhotos index:(NSInteger)index {
+    
+    SNImagePreviewViewController *imagePreVC = [[SNImagePreviewViewController alloc] init];
+    
+    self = [super initWithRootViewController:imagePreVC];
+    
+    if (self) {
+        
+        self.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
+        self.allowPickingOriginalPhoto = YES;
+        self.timeout = 15;
+        self.photoPreviweMaxWidth = 600.0;
+        self.photoWidth = 828.0;
+        //        [self defaultImageName];
+        imagePreVC.photos = [NSMutableArray arrayWithArray:selectedPhotos];
+        imagePreVC.currentIndex = index;
+        
+         __weak typeof(self) weakSelf = self;
+        
+#warning TODO: 未完成
+    }
+
+    return self;
+}
+
 
 - (void)pushToPhotoPickerVC {
+    
+    _pushToPhotoPickerVc = YES;
+    
+    if (_pushToPhotoPickerVc) {
+        
+        SNPhotoPickerViewController *photoVC = [[SNPhotoPickerViewController alloc] init];
+        photoVC.isFirstAppear = YES;
+        photoVC.columnNumber = self.columnNumber;
+        
+        [[SNImageManager manager] getCameraRollAlbumAllowPickingVideo:self.allowPickingVideo allowPickingImage:self.allowPickingImage completion:^(SNAlbumModel *album) {
+            photoVC.model = album;
+            
+            [self pushViewController:photoVC animated:YES];
+            
+            _pushToPhotoPickerVc = NO;
+        }];
+        
+
+    }
     
 }
 
 - (void)observeAuthrizationStatusChange {
     
     if ([[SNImageManager manager] getAuthorizationStatus]) {
+     
         
+        [self pushToPhotoPickerVC];
+        [_tipLable removeFromSuperview];
+//        [_settingBtn removeFromSuperview];
+        [_timer invalidate];
+        _timer = nil;
     }
+}
+
+- (void)settingBtnClick {
+    
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    
+}
+
+
+- (void)showAlertWithTitle:(NSString *)title {
+    
+    UIAlertController *alertControl = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertControl addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertControl animated:YES completion:nil];
+}
+
+#pragma mark -- set method
+
+- (void)setTimeout:(NSInteger)timeout {
+    
+    _timeout = timeout;
+    
+    if (timeout < 5) {
+        _timeout = 5;
+    } else if (_timeout > 60) {
+        _timeout = 60;
+    }
+}
+
+- (void)setColumnNumber:(NSInteger)columnNumber {
+#warning TODO:
+    _columnNumber = columnNumber;
+    if (columnNumber <= 2) {
+        _columnNumber = 2;
+    } else if (columnNumber >= 6) {
+        _columnNumber = 6;
+    }
+    
+    SNPhotoPickerViewController *albumPickerVc = [self.childViewControllers firstObject];
+    albumPickerVc.columnNumber = _columnNumber;
+    [SNImageManager manager].columnNumber = _columnNumber;
+}
+
+- (void)setMaxImageCount:(NSUInteger)maxImageCount {
+    if (maxImageCount > 0 && maxImageCount < 10) {
+        _maxImageCount = maxImageCount;
+    } else {
+        _maxImageCount = 9;
+    }
+}
+
+- (void)setPhotoPreviweMaxWidth:(CGFloat)photoPreviweMaxWidth {
+    _photoPreviweMaxWidth = photoPreviweMaxWidth;
+    
+    if (photoPreviweMaxWidth > 800) {
+        _photoPreviweMaxWidth = 800;
+    } else if (photoPreviweMaxWidth < 500) {
+        _photoPreviweMaxWidth = 500;
+    }
+}
+
+- (void)setSelectedAssets:(NSMutableArray *)selectedAssets {
+    
+    _selectedAssets = selectedAssets;
+    
+    _selectedModels = [NSMutableArray array];
+    
+    for (PHAsset *asset in selectedAssets) {
+        SNAssetModel *model = [SNAssetModel modelWithAsset:asset type:SNAssetModelMediaTypePhoto];
+        model.isSelected = YES;
+        [_selectedModels addObject:model];
+    }
+}
+
+- (void)setAllowPickingImage:(BOOL)allowPickingImage {
+    
+    _allowPickingImage = allowPickingImage;
+    
+    NSString *allowPickImageStr = allowPickingImage ? @"1": @"0";
+    [[NSUserDefaults standardUserDefaults] setObject:allowPickImageStr forKey:@"sn_allowPickingImage"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setAllowPickingVideo:(BOOL)allowPickingVideo {
+    
+    _allowPickingVideo = allowPickingVideo;
+    
+    NSString *allowPickVideoStr = allowPickingVideo ? @"1" : @"0";
+    [[NSUserDefaults standardUserDefaults] setObject:allowPickVideoStr forKey:@"sn_allowPickingVideo"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
+- (void)setSortAscendingByModificationDate:(BOOL)sortAscendingByModificationDate {
+    
+    _sortAscendingByModificationDate = sortAscendingByModificationDate;
+    
+    [SNImageManager manager].sortAscendingByModificationDate = sortAscendingByModificationDate;
 }
 
 @end

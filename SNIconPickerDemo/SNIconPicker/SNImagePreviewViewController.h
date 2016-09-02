@@ -10,4 +10,13 @@
 
 @interface SNImagePreviewViewController : UIViewController
 
+// 所有图片模型数组
+@property (nonatomic, strong) NSMutableArray *models;
+// 所有图片数组
+@property (nonatomic, strong) NSMutableArray *photos;
+// 用户点击的图片的索引
+@property (nonatomic, assign) NSInteger currentIndex;
+// 是否返回原图
+@property (nonatomic, assign) BOOL isSelectOriginalPhoto;
+
 @end

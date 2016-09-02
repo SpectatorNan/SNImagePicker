@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class SNAlbumModel;
 @interface SNPhotoPickerViewController : UIViewController
+
+@property (nonatomic, assign) BOOL isFirstAppear ;
+
+@property (nonatomic, assign) NSInteger columnNumber;
+
+@property (nonatomic, strong) SNAlbumModel *model;
 
 @end
