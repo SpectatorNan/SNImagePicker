@@ -11,6 +11,7 @@
 		7469BBC71D782D7100FCEAEF /* SNImagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBC61D782D7100FCEAEF /* SNImagePreviewViewController.m */; };
 		7469BBCA1D782D9800FCEAEF /* SNVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */; };
 		7469BBD01D782DF000FCEAEF /* SNPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */; };
+		746B56E21D7D10E3008806CB /* SNAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 746B56E11D7D10E3008806CB /* SNAlbumCell.m */; };
 		7497EE3A1D7423D3000EC57E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE391D7423D3000EC57E /* main.m */; };
 		7497EE3D1D7423D3000EC57E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3C1D7423D3000EC57E /* AppDelegate.m */; };
 		7497EE401D7423D3000EC57E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7497EE3F1D7423D3000EC57E /* ViewController.m */; };
@@ -52,6 +53,8 @@
 		7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNVideoPlayerViewController.m; sourceTree = "<group>"; };
 		7469BBCE1D782DF000FCEAEF /* SNPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNPhotoPickerViewController.h; sourceTree = "<group>"; };
 		7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNPhotoPickerViewController.m; sourceTree = "<group>"; };
+		746B56E01D7D10E3008806CB /* SNAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNAlbumCell.h; sourceTree = "<group>"; };
+		746B56E11D7D10E3008806CB /* SNAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNAlbumCell.m; sourceTree = "<group>"; };
 		7497EE351D7423D3000EC57E /* SNIconPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNIconPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7497EE391D7423D3000EC57E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7497EE3B1D7423D3000EC57E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 				7469BBC91D782D9800FCEAEF /* SNVideoPlayerViewController.m */,
 				7469BBCE1D782DF000FCEAEF /* SNPhotoPickerViewController.h */,
 				7469BBCF1D782DF000FCEAEF /* SNPhotoPickerViewController.m */,
+				746B56E01D7D10E3008806CB /* SNAlbumCell.h */,
+				746B56E11D7D10E3008806CB /* SNAlbumCell.m */,
 			);
 			path = SNIconPicker;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				7469BBC71D782D7100FCEAEF /* SNImagePreviewViewController.m in Sources */,
 				7469BBD01D782DF000FCEAEF /* SNPhotoPickerViewController.m in Sources */,
 				746855481D77B20E00DBB16A /* SNImagePickerController.m in Sources */,
+				746B56E21D7D10E3008806CB /* SNAlbumCell.m in Sources */,
 				7497EE6E1D742408000EC57E /* SNIconPicker.m in Sources */,
 				7497EE741D745945000EC57E /* SNToastView.m in Sources */,
 				7497EE7A1D752715000EC57E /* SNAlbumModel.m in Sources */,

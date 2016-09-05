@@ -127,6 +127,10 @@ static CGSize  SNMinAssetGridThumbnailSize;
     
     for (PHAssetCollection *collection in smartAlbums) {
         
+        if (![collection isKindOfClass:[PHAssetCollection class]]) {
+            return;
+        }
+        
         PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:option];
         
         if (fetchResult.count < 1) {

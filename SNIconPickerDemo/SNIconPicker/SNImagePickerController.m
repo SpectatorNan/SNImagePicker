@@ -10,6 +10,7 @@
 #import "SNImageManager.h"
 #import "SNImagePreviewViewController.h"
 #import "SNPhotoPickerViewController.h"
+#import "SNAlbumCell.h"
 
 #define kNavigationBarBackColor [UIColor colorWithRed:(34/255.0) green:(34/255.0)  blue:(34/255.0) alpha:1.0]
 #define kOkBtnColorNormal [UIColor colorWithRed:(83/255.0) green:(179/255.0) blue:(17/255.0) alpha:1.0];
@@ -114,7 +115,7 @@
         // 最多选取为9张
         self.maxImageCount = maxImageCount;
         self.imagePickerDelegate = delegate;
-        self.selectedModels = [NSMutableArray array];
+//        self.selectedModels = [NSMutableArray array];
         
         //        默认允许用户选择视频和原图，可以在该方法之后自定义设置
         self.allowPickingImage = YES;
@@ -322,7 +323,101 @@
 
 @end
 
+@interface SNAlbumPickerController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *_tableView;
+    SNImagePickerController *_myNavi;
+}
+@property (nonatomic, strong) NSMutableArray *albumsArr;
+
+@end
+
 
 @implementation SNAlbumPickerController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationItem.title = @"相册";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    _myNavi = (SNImagePickerController *)self.navigationController;
+    
+    [self settingTable];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    if (_albumsArr) {
+        [self.albumsArr enumerateObjectsUsingBlock:^(SNAlbumModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.selectedModels = _myNavi.selectedModels;
+        }];
+        [_tableView reloadData];
+    } else {
+        [self settingTable];
+    }
+}
+
+
+- (void)settingTable {
+    
+    
+    [[SNImageManager manager] getAllAlbumsAllowPickingVideo:_myNavi.allowPickingVideo allowPickingImage:_myNavi.allowPickingImage completion:^(NSArray<SNAlbumModel *> *albums) {
+       
+        self.albumsArr = [albums mutableCopy];
+        
+        [self.albumsArr enumerateObjectsUsingBlock:^(SNAlbumModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.selectedModels = _myNavi.selectedModels;
+        }];
+        
+        if (!_tableView) {
+            _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+            _tableView.rowHeight = 60;
+            _tableView.tableFooterView = [UIView new];
+            _tableView.dataSource = self;
+            _tableView.delegate = self;
+            [_tableView registerClass:[SNAlbumCell class] forCellReuseIdentifier:@"SNAlbumCell"];
+            [self.view addSubview:_tableView];
+            
+        }
+        else
+        {
+            [_tableView reloadData];
+        }
+    }];
+    
+}
+
+#pragma mark - Click Event
+
+- (void)cancel {
+    
+//    if (_myNavi.autoDismiss) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    }
+    if ([_myNavi.imagePickerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+//        [_myNavi.pickerDelegate imagePickerControllerDidCancel:imagePickerVc];
+    }
+//    if (_myNavi.imagePickerControllerDidCancelHandle) {
+//        _myNavi.imagePickerControllerDidCancelHandle();
+//    }
+}
+
+#pragma mark - UITableViewDataSource && Delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return _albumsArr.count;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SNAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SNAlbumCell"];
+    
+    
+    return cell;
+    
+}
 
 @end
