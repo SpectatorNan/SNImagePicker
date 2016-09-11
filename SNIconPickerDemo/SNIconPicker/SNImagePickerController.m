@@ -30,6 +30,8 @@
 /// 默认4列, TZPhotoPickerController中的照片collectionView
 @property (nonatomic, assign) NSInteger columnNumber;
 
+@property (nonatomic, assign) UIStatusBarStyle beforeStatusBarStyle;
+
 #pragma mark -- out
 // 用户选取的照片数组
 @property (nonatomic, strong) NSMutableArray *selectedModels;
@@ -57,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.beforeStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [self defaultConfig];
 }
 
@@ -72,12 +74,16 @@
     self.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationBar.translucent = YES;
     
-    self.navigationBar.barTintColor = kNavigationBarBackColor;
-    self.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationBar.barTintColor = kNavigationBarBackColor;
+//    self.navigationBar.tintColor = [UIColor whiteColor];
+    self.naviColor = kNavigationBarBackColor;
+    self.naviTintColor = [UIColor whiteColor];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
-
+    
 //    设置状态栏颜色
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+//    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    self.statusBarLight = YES;
     
 //    获取系统item修改attributes属性
     UIBarButtonItem *barItem;
@@ -321,7 +327,39 @@
     [SNImageManager manager].sortAscendingByModificationDate = sortAscendingByModificationDate;
 }
 
+
+- (void)setNaviColor:(UIColor *)naviColor {
+    
+    _naviColor = naviColor;
+    self.navigationBar.barTintColor = naviColor;
+}
+
+- (void)setNaviTintColor:(UIColor *)naviTintColor {
+    _naviTintColor = naviTintColor;
+    
+    self.navigationBar.tintColor = naviTintColor;
+}
+
+- (void)setStatusBarLight:(BOOL)statusBarLight {
+    _statusBarLight = statusBarLight;
+    
+    if (statusBarLight) {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    } else {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }
+}
+
+
+- (void)dealloc {
+    
+    [UIApplication sharedApplication].statusBarStyle = self.beforeStatusBarStyle;
+}
+
 @end
+
+
+#pragma mark -- implementation SNAlbumPickerController
 
 @interface SNAlbumPickerController ()<UITableViewDelegate,UITableViewDataSource>
 {

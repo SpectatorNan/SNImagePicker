@@ -24,6 +24,12 @@
 
 @property (nonatomic, weak) id<SNImagePickerControllerDelegate> imagePickerDelegate;
 
+@property (nonatomic, strong) UIColor *naviColor;
+
+@property (nonatomic, strong) UIColor *naviTintColor;
+
+@property (nonatomic, assign) BOOL statusBarLight;
+
 @end
 
 
